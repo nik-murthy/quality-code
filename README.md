@@ -49,7 +49,9 @@ Checkstyle files with violations: 2
 Checkstyle violations by severity: [warning:15]
 ```
 
-However, you might want the task to exit with failure in case of violations. Adding the below lines to the `build.gradle` file will make the task fail - 
+The task generates a report at the location mentioned above. You can view the files with violations and the nature of the violations in an easy to understand manner. 
+
+The task exited successfully in the first case. However, you might want the task to exit with failure in case of violations. Adding the below lines to the `build.gradle` file will make the task fail - 
 
 ```
 checkstyle {
@@ -62,4 +64,4 @@ checkstyle {
 
 You are now aware of coding standards, their importance, and an easy way to enforce them in your projects. You might require futher tinkering of the `checkstyle.xml` file to fine tune the rules to your team's requirements. 
 
-Thank you for spending some of your precious time here!
+Thank you for reading this!
