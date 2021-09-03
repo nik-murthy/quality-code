@@ -44,6 +44,6 @@ While this may be an oversimplification, exceptions like these can sneak into yo
 
 ## Summary 
 
-You are now aware of how live environments can be protected from code perhaps written by a tired developer (in dire need of some coffee) can be    
+You are now aware of how live environments can be protected from code perhaps written by a tired developer (in dire need of some coffee)
 
 Thank you for reading this!
