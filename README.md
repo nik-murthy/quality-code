@@ -1,9 +1,9 @@
 # 02 - Static Code Analysis P1
 
-Before code is ever deployed, a variety of static analyses of quality can be performed. An important aspect of managing a code base as a team is to agree upon certain standards.
+Before code is ever deployed, a variety of static analyses of quality can be performed. Static analysis can be a great safeguard against costly bugs. We were young developers at one point, and I'm sure we can appreciate how some of these tools have helped us avoid some landmines as well as learn best practices in the field. 
 
 ## Coding Standards
-Why are coding standards important? According to the article [here](https://medium.com/leafgrowio-engineering/why-is-coding-standards-important-319fce79d1a4) - 
+An important aspect of managing a code base as a team is to agree upon certain standards. Why are coding standards important? According to the article [here](https://medium.com/leafgrowio-engineering/why-is-coding-standards-important-319fce79d1a4) - 
 
 "Any developer who is not consistent with things as simple as the naming conventions or documenting and defining functions is buying themselves a big headache, especially if they are working as part of a team (i.e. anything > 1). Imagine any dev team, each developer writing code with their own style; that would look like some Orcs trying to eat the last beefsteak in the Middle-earth.
 
