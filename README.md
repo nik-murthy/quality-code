@@ -1,49 +1,47 @@
-# 03 - Static Code Analysis P2
+# 04 - Setting Up Tasks For The Three Types Of Tests
 
-In this section, we'll look at the static code analysis tools PMD (Programming Mistakes Detector) & SpotBugs.
+In this section, we'll look at how we can add the three different kinds of tests that make up the testing pyramid. The testing pyramid is made up of 
 
-## PMD
-As per the PMD [website](https://pmd.github.io/) - 
+- Unit tests: bottom of pyramid, most number of tests here
+- Integration tests: middle of pyramid, used to test interactions between various components. 
+- End to end/Blackbox tests: top of the pyramid, least number of tests here.
 
-PMD is a source code analyzer. It finds common programming flaws like unused variables, empty catch blocks, unnecessary object creation, and so forth.
+You can read more about the testing pyramid [here](https://martinfowler.com/articles/practical-test-pyramid.html#TheTestPyramid)
 
-## SpotBugs
-As per the SpotBugs [website](https://spotbugs.readthedocs.io/en/stable/introduction.html) - 
+A useful git repo for testing is [here](https://github.com/hamvocke/spring-testing)
 
-SpotBugs is a program to find bugs in Java programs. It looks for instances of “bug patterns” — code instances that are likely to be errors.
+## Plugins Used
 
-## Gradle Plugin
+- Jacoco: Once the integration tests are run, the code coverage report is generated using Jacoco
 
-The gradle plugin for PMD can be added to a project by following instructions [here](https://docs.gradle.org/current/userguide/pmd_plugin.html)
+## Spring Annotations Used
 
-The gradle plugin for PMD can be added to a project by following instructions [here](https://plugins.gradle.org/plugin/com.github.spotbugs)
+The more important part is configuring tasks that pick up tests in different folders and run them independently. In the unit tests, the annotation ```@ExtendWith(MockitoExtension.class)```  is used whereas in the integration and blackbox tests the annotation ```@SpringBootTest(classes = {DemoApplication.class})``` is used. 
 
-Once added and after reloading the Gradle project in the Gradle tool window, the following tasks should show up -
+In the unit tests, we don't need the entire application context to test just one class. Hence we don't use the annotation ```@SpringBootTest```. However, when we are testing integrations and performing end to end testing, we do require the entire application context.
 
-pmdMain 
-pmdTest
-spotbugsMain
-spotbugsTest
+If you navigate into ```@SpringBootTest```, you'll find that the following annotations (notice ```@ExtendsWith``` also present here) are used - 
 
-## Results
-
-Unlike with Checkstyle, these plugins require no additional files. When each task finds violations, it exits with failure. This is important because, eventually, when we setup the CI pipeline for this repository, we want builds to fail if the code does not pass these quality gates. 
-
-As an easy-to-understand example, add the below function to any class. You will find that both PMD and SpotBugs tasks will fail, thereby protecting against buggy code being released - 
 
 ```
-void bug() {
-    List obj = null;
-    while (obj.contains(true)) {
-
-    }
-  }
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@BootstrapWith(SpringBootTestContextBootstrapper.class)
+@ExtendWith(SpringExtension.class)
 ```
 
-While this may be an oversimplification, exceptions like these can sneak into your code base. Though these tools may not foolproof your code base by 100%, they provide a measure of confidence while releasing code. 
+We need SpringExtension as it  integrates the Spring TestContext Framework into JUnit 5's Jupiter programming model. An excellent explanation of how to use the ```@ExtendsWith``` annotation is [here](https://stackoverflow.com/questions/61433806/junit-5-with-spring-boot-when-to-use-extendwith-spring-or-mockito).
 
 ## Summary 
 
-You are now aware of how live environments can be protected from code perhaps written by a tired developer (in dire need of some coffee)
+With the new configurations added to build.gradle, if we execute the command ``````, we see that the task 'build' executes the following - 
+
+![build-tasks](./img/tests-dry-run.png)
+
+We see that when we run the 'build' task, the three tasks for tests are run, and only after a report is generated, the build task proceeds. Now we can use each of these tasks independently during feature development and not have to wait on other test tasks to complete.
+
+Setting up a robust test suite is quintessential to consistently delivering quality software. In the next sections, we'll attempt to bring in containers to create a test environment where we can run integration and end to end cases successfully.
 
 Thank you for reading this!
