@@ -6,9 +6,9 @@ In this section, we'll look at how we can add the three different kinds of tests
 - Integration tests: middle of pyramid, used to test interactions between various components. 
 - End to end/Blackbox tests: top of the pyramid, least number of tests here.
 
-You can read more about the testing pyramid [here](https://martinfowler.com/articles/practical-test-pyramid.html#TheTestPyramid)
+You can read more about the testing pyramid [here](https://martinfowler.com/articles/practical-test-pyramid.html#TheTestPyramid).
 
-A useful git repo for testing is [here](https://github.com/hamvocke/spring-testing)
+A useful git repo for testing is [here](https://github.com/hamvocke/spring-testing).
 
 ## Plugins Used
 
