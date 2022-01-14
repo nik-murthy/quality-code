@@ -6,6 +6,7 @@ plugins {
 	id 'checkstyle'
 	id 'pmd'
 	id 'com.github.spotbugs' version '4.7.3'
+	id 'jacoco'
 }
 
 group = 'com.example'
@@ -31,11 +32,65 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
-	useJUnitPlatform()
-}
+// Quality
 
-checkstyle {
+checkstyleMain {
+	group "$QUALITY_GRADLE_GROUP"
 	ignoreFailures = false
 	maxWarnings = 0
 }
+
+checkstyleTest {
+	group "$QUALITY_GRADLE_GROUP"
+	ignoreFailures = false
+	maxWarnings = 0
+}
+
+pmdMain {
+	group "$QUALITY_GRADLE_GROUP"
+}
+
+pmdTest {
+	group "$QUALITY_GRADLE_GROUP"
+}
+
+spotbugsMain {
+	group "$QUALITY_GRADLE_GROUP"
+}
+
+spotbugsTest {
+	group "$QUALITY_GRADLE_GROUP"
+}
+
+// Tests
+
+test {
+	group "$TEST_GRADLE_GROUP"
+	include 'unit/**'
+	useJUnitPlatform()
+}
+
+task integrationTest(type: Test) {
+	group "$TEST_GRADLE_GROUP"
+	include 'integration/**'
+	description 'Run Integration Tests'
+	mustRunAfter test
+	useJUnitPlatform()
+}
+
+task blackboxTest(type: Test) {
+	group "$TEST_GRADLE_GROUP"
+	include 'blackbox/**'
+	description 'Run Blackbox Tests'
+	mustRunAfter integrationTest
+	testLogging.showStandardStreams true
+}
+
+jacocoTestReport {
+	group "$TEST_GRADLE_GROUP"
+	dependsOn integrationTest // tests are required to run before generating the report
+}
+
+check.dependsOn integrationTest
+check.dependsOn blackboxTest
+check.dependsOn jacocoTestReport
