@@ -16,3 +16,7 @@ With the docker compose plugin setup, we can write a docker-compose.yml and conf
 ## Jib plugin
 
 Once we validate a commit, it is time to create an image and upload it to a container registry. I'm going to use Google's Jib plugin to containerize the application and upload the image onto Docker Hub.
+
+Now we have access to the following tasks - \
+![jib-tasks](img/jib-tasks.png)
+
