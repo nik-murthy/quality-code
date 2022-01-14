@@ -1,7 +1,12 @@
-# 05 - Setting Up The API Contract
+# 06 - Adding Docker Compose Plugin
 
-Before we build anything, we must decide what to build. Going with a API design first approach is a good practice. I
+The docker compose plugin will help us setup test environment on our local machine and enable us to run integration and blackbox tests.
 
-I plan to expose resource of type "Users". I'm going to create an interface that allows CRUD operations on the Users resource. 
+The plugin I'm using is gradle-docker-compose-plugin from avast available [here](https://github.com/avast/gradle-docker-compose-plugin)
 
-The API contract is used by consumers of the API contract to understand the functionality being offered by the API. In this case, the API contract is present under src/main/api.
+When adding this plugin in the build.gradle file, I found that I had to add the repositories section twice. I was puzzled and, as always, StackOverflow helped me understand. [Here](https://stackoverflow.com/questions/13923766/gradle-buildscript-dependencies) is someone having the exact same question many years before I did.
+
+Now we have access to the following tasks - \
+![docker-compose-tasks](img/docker-compose-tasks.png)
+
+With the docker compose plugin setup, we can write a docker-compose.yml and configure the plugin to use that file and create the test environment we need.  
